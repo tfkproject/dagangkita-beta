@@ -1,0 +1,53 @@
+<!--
+  Generated template for the PembayaranPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Pembayaran</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-card>
+
+        <ion-item>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Logo_BRI.png" width="50px">
+        </ion-item>
+        
+        <ion-item>
+          <h2>Bank BRI Simpedes</h2>
+          <p>2115 01 001225 53 1<br>
+          a/n Diah Anggraina Fitri</p>
+        </ion-item>
+      <div padding>
+        <hr>
+        <h2 *ngFor="let item_umkm of items_umkm">
+            Detail belanja anda di:<br><h3><b>{{item_umkm.Nama_UKM}}</b></h3>
+        </h2>
+        <ol>
+          <li *ngFor="let item_produk of items_produk">
+            Beli {{item_produk.Nama_Produk}} x {{item_produk.jumlah}} = Rp. {{item_produk.harga}}
+          </li>
+        </ol>
+        <hr>
+        Total Pembayaran: <b *ngFor="let item_umkm of items_umkm">Rp. {{item_umkm.total_bayar}}</b> 
+        <hr>
+        <h2>Cara pembayaran:</h2>
+        <ul>
+          <li>Klik tombol buat invoice</li>
+          <li>Transfer sejumlah <b *ngFor="let item_umkm of items_umkm">Rp. {{item_umkm.total_bayar}}</b>  ke nomor rekening diatas</li>
+          <li>Kemudian upload bukti pembayaran anda melalui <i>menu transaksi</i></li>
+        </ul>
+        <button ion-button icon-left block small (click)="buatInvoice()">
+          <ion-icon name="paper"></ion-icon>
+          <div>Buat Invoice</div>
+        </button>
+      </div>
+    </ion-card>
+</ion-content>

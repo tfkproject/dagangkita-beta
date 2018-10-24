@@ -1,0 +1,50 @@
+<!--
+  Generated template for the OrderPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Order Produk</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-card>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img [src]="gmbr_pdk1">
+          </ion-thumbnail>
+          <h2><b>{{nama_pdk}}</b></h2>
+          <h3>Rp. {{harga1}} - Rp. {{harga2}}</h3>
+          <p><ion-icon name="bookmark"></ion-icon>&nbsp;{{nama_ukm}}</p>
+        </ion-item>
+
+        <div padding>
+          <h2>Jumlah</h2>
+          <div text-center>
+              <button ion-button small (click)="jumKurang()"><ion-icon name="remove"></ion-icon></button>
+              &nbsp;
+              <b>&nbsp;{{counter}}&nbsp;</b>
+              &nbsp;
+              <button ion-button small (click)="jumTambah()"><ion-icon name="add"></ion-icon></button>
+          </div>
+          <h2><b>Rp. {{tharga}}</b></h2>
+          <ion-list>
+
+              <ion-item>
+                <ion-label>Catatan</ion-label>
+                <ion-input type="text" [(ngModel)]="catatan"></ion-input>
+              </ion-item>
+            
+            </ion-list>
+            <div>
+                <button ion-button color="primary" block (click)="prosesTambahKeKeranjang()"><ion-icon name="add"></ion-icon>&nbsp;ke keranjang&nbsp;<ion-icon name="cart"></ion-icon></button>
+            </div>
+        </div>
+      </ion-card>
+</ion-content>

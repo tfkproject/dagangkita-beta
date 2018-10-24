@@ -1,0 +1,86 @@
+<!--
+  Generated template for the DetailProdukPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Detail Produk</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-card>
+        <ion-slides>
+            <ion-slide>
+                <img width="auto" [src]="gmbr_pdk1">
+                <h6>Gambar 1</h6>
+            </ion-slide>
+            <ion-slide>
+                <img width="auto" [src]="gmbr_pdk2">
+                <h6>Gambar 2</h6>
+            </ion-slide>
+            <ion-slide>
+                <img width="auto" [src]="gmbr_pdk3">
+                <h6>Gambar 3</h6>
+            </ion-slide>
+            <ion-slide>
+                <img width="auto" [src]="gmbr_pdk4">
+                <h6>Gambar 4</h6>
+            </ion-slide>
+          </ion-slides>
+          <div padding><i>Gaser untuk melihat gambar lainnya</i></div>
+        <ion-card-content>
+          Share:
+            <ion-row>
+                <ion-col>
+                    <button ion-button icon-left clear small (click)="shareWA()">
+                      <ion-icon name="logo-whatsapp"></ion-icon>
+                    </button>
+                  </ion-col>
+              <ion-col>
+                <button ion-button icon-left clear small (click)="shareFb()">
+                  <ion-icon name="logo-facebook"></ion-icon>
+                </button>
+              </ion-col>
+              <ion-col>
+                  <button ion-button icon-left clear small (click)="shareTw()">
+                    <ion-icon name="logo-twitter"></ion-icon>
+                  </button>
+                </ion-col>
+              
+            </ion-row>
+            <ion-card-title>
+                {{nama_pdk}}
+            </ion-card-title>
+            <b>Rp. {{harga1}}</b>
+            -
+            <b>Rp. {{harga2}}</b><br>
+            <ion-icon name="bookmark"></ion-icon>&nbsp;{{nama_ukm}}<br>
+            <ion-icon name="pin"></ion-icon>&nbsp;{{almt}}<br><br>
+            <b>Deskripsi</b><br>
+            <div [innerHtml]="bahan_produk"></div>         
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-left block small (click)="cekLogin()">
+                <ion-icon name="cart"></ion-icon>
+                <div>Order</div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-left block small (click)="telpon()">
+                <ion-icon name="call"></ion-icon>
+                <div>Hub. UKM</div>
+              </button>
+            </ion-col>
+            
+          </ion-row>
+        </ion-card-content>
+        
+        
+      </ion-card>
+</ion-content>

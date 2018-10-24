@@ -1,0 +1,185 @@
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NavController, NavParams, Platform } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
+
+declare var google;
+/**
+ * Generated class for the RuteMapPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@Component({
+  selector: 'page-rute-map', 
+  templateUrl: 'rute-map.html',
+})
+export class RuteMapPage {
+
+  @ViewChild('map') mapElement: ElementRef;
+
+  start = 'asal';
+  end = 'tujuan';
+
+  map: any;
+  lat_orig: any;
+  lon_orig: any;
+
+  lat_dest: any;
+  lon_dest: any;
+
+  directionsService = new google.maps.DirectionsService;
+  distanceService = new google.maps.DistanceMatrixService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public toastCtrl: ToastController,
+    private geolocation: Geolocation,
+    public platform: Platform
+  ) {
+    this.lat_dest = navParams.get('plat');
+    this.lon_dest = navParams.get('plon');
+
+    //this.lat_orig = 1.460796;
+    //this.lon_orig = 102.151117;
+    
+  }
+
+  ionViewDidLoad() {
+    this.initMap();
+    console.log('ionViewDidLoad RuteMapPage');
+  }
+
+  initMap() {
+    this.geolocation.getCurrentPosition({ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true }).then((resp) => {
+      let mylocation = new google.maps.LatLng(resp.coords.latitude,resp.coords.longitude);
+      this.start = mylocation;
+      this.map = new google.maps.Map(this.mapElement.nativeElement, {
+        zoom: 16,
+        center: mylocation
+      });
+    });
+
+    this.directionsDisplay.setMap(this.map);
+
+    let loktujuan = new google.maps.LatLng(this.lat_dest,this.lon_dest);
+    this.end = loktujuan;
+
+    this.calculateAndDisplayRoute();
+  }
+
+  calculateAndDisplayRoute() {
+    this.directionsService.route({
+        origin: this.start,
+        destination: this.end,
+        travelMode: 'DRIVING'
+      }, (response, status) => {
+        if (status === 'OK') {
+          this.directionsDisplay.setDirections(response);
+          this.getDistance();
+        }/* else {
+          window.alert('Gagal melakukan render tujuan! Failed: ' + status);
+        }*/
+      });
+  }
+
+  getDistance(){
+    this.distanceService.getDistanceMatrix({
+      origins: [this.start],
+      destinations: [this.end],
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.MATRIC,
+      avoidHighways: false,
+      avoidTolls: false
+    }, (response, status) => {
+        if (status === 'OK') {
+          let toast = this.toastCtrl.create({
+            message: "Jarak: "+response.rows[0].elements[0].distance.text+", dengan estimasi waktu: "+response.rows[0].elements[0].duration.text,
+            showCloseButton: true,
+            closeButtonText: 'Tutup'
+          });
+          toast.present();
+        } else {
+          window.alert('Gagal melakukan render tujuan! Failed: ' + status);
+        }
+    });
+  }
+
+}
+
+/////////////////////////////////
+
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NavController, NavParams, Platform } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
+import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
+
+declare var google;
+/**
+ * Generated class for the RuteMapPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@Component({
+  selector: 'page-rute-map', 
+  templateUrl: 'rute-map.html',
+})
+export class RuteMapPage {
+
+  latitude: number;
+  longitude: number;
+  
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public toastCtrl: ToastController,
+    private platform: Platform,
+    private geolocation: Geolocation,
+    public locationTracker: LocationTrackerProvider
+  ) {
+    /*this.platform.ready().then(() => {
+      this.findUserLocation();
+    });*/
+  }
+
+  ionViewDidLoad() {
+    /*this.platform.ready().then(() => {
+      this.findUserLocation();
+    });*/
+    
+    this.start();
+  }
+
+  start(){
+    this.locationTracker.startTracking();
+  }
+ 
+  stop(){
+    this.locationTracker.stopTracking();
+  }
+
+  /*findUserLocation(){
+    let options = {
+      enableHighAccuracy: true,
+      timeout: 25000
+    };
+
+
+    this.geolocation.getCurrentPosition(options).then((position) => {
+
+      this.latitude = position.coords.latitude;
+      this.longitude = position.coords.longitude;
+
+      //this.mapsProvider.init(this.location, this.mapElement);
+
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+  }*/
+}

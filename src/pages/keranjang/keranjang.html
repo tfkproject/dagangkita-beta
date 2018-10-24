@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>
+        Keranjang
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-list>
+      <div padding *ngFor="let item_umkm of items_umkm">
+        <b><ion-icon name="bookmark"></ion-icon>&nbsp;{{item_umkm.Nama_UKM}}</b>
+          <ion-card *ngFor="let item_produk of item_umkm.produk">
+              <ion-item>
+                  <ion-thumbnail item-start>
+                      <img [src]="item_produk.Gambar_Produk">
+                  </ion-thumbnail>
+                  <h2>{{item_produk.Nama_Produk}}</h2>
+                  <h3><ion-icon name="cash"></ion-icon> Rp. {{item_produk.harga}}</h3>
+                  <h3><ion-icon name="basket"></ion-icon> {{item_produk.jumlah}}</h3>
+                  <p>Catatan: {{item_produk.catatan}}</p>
+              </ion-item>
+              <ion-row>
+                  <ion-col>
+                      <button color="danger" ion-button icon-left small (click)="hapusItem(item_produk.id_item_beli)" style="float: right;">
+                        <ion-icon name="trash"></ion-icon>
+                        <div> Hapus</div>
+                      </button>
+                  </ion-col>
+              </ion-row>
+            
+            
+          </ion-card>
+          <b>Total Bayar: Rp. {{item_umkm.total_bayar}}</b>
+          <ion-row>
+                  <ion-col>
+                    <button ion-button icon-left block small (click)="keHalBayar(
+                      item_umkm.id_keranjang,
+                      id_pelanggan,
+                      item_umkm.ID_Pemilik,
+                      item_umkm.total_bayar
+                      )">
+                      <ion-icon name="card"></ion-icon>
+                      <div>Bayar</div>
+                    </button>
+                  </ion-col>
+                  
+          </ion-row>
+      </div>
+    </ion-list>
+    
+  </ion-content>
+  
